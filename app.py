@@ -1,11 +1,10 @@
-import random
-import time
-import requests
-from getpass import getpass
-from pprint import pprint
 from flask import Flask, render_template, request, redirect, url_for, session
+import requests
 import asyncio
 import aiohttp
+import random
+import time
+
 
 app = Flask(__name__)
 app.secret_key = '123'
@@ -59,8 +58,6 @@ def req_func():
     #     return f'No! status: {res.status_code}'
     if res:
         res_json = res.json()
-        pprint(res_json)
-
         return f'Yes! status: {res.status_code} | text: {res.json()}'
     else:
         return f'No! status: {res.status_code}'
