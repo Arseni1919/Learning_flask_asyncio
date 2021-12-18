@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Users{% endblock %}
+{% block body %}
+    <h1>Pockemons</h1>
+    {% if time %}
+        {% if session.sync_time %}
+            <h2>[SYNC] Time to finish: {{ session.sync_time }} to get: {{ session.sync_num }} items</h2>
+        {% endif %}
+        {% if session.async_time %}
+            <h2>[ASYNC] Time to finish: {{ session.async_time }} to get: {{ session.async_num }} items</h2>
+        {% endif %}
+    {% endif %}
+    <h3>Sync:</h3>
+    <form action="/users" method="get">
+        From: <input type="text" name="from" value={{ from_val | default(1, true) }}>
+        Until: <input type="text" name="until" value={{ until_val | default(4, true) }}>
+        <input type="hidden" name="type" value="sync">
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <form action="/rand_users" method="get">
+        Num: <input type="text" name="num" value={{ session.num | default(3, true) }}>
+        <input type="hidden" name="type" value="sync">
+        <input type="submit" value="Get Random Pockemons">
+    </form>
+
+    <h3>Async:</h3>
+    <form action="/users" method="get">
+        From: <input type="text" name="from" value={{ from_val | default(1, true) }}>
+        Until: <input type="text" name="until" value={{ until_val | default(4, true) }}>
+        <input type="hidden" name="type" value="async">
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <form action="/rand_users" method="get">
+        Num: <input type="text" name="num" value={{ session.num | default(3, true) }}>
+        <input type="hidden" name="type" value="async">
+        <input type="submit" value="Get Random Pockemons">
+    </form>
+
+    {% if users %}
+        {% for user in users %}
+{#            <h4>Json keys:</h4>#}
+{#            {% for k in user %}#}
+{#                {{ k }},#}
+{#            {% endfor %}#}
+            <h3>Pockemon {{ user.id }}: </h3>
+            <img src="{{ user.sprites.back_default }}" alt="pic">
+            <h4>Name: {{ user.name }}</h4>
+            <h4>height: {{ user.height }}</h4>
+            <h4>Weight: {{ user.weight }}</h4>
+{#            <h2>(followers: {{ user.followers }}, following: {{ user.following }})</h2>#}
+            <hr>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
