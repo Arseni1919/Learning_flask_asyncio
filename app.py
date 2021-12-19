@@ -4,10 +4,13 @@ import asyncio
 import aiohttp
 import random
 import time
-
+# import ssl
+# from flask_session import Session
+# ssl._create_default_https_context = ssl._create_unverified_context
 
 app = Flask(__name__)
 app.secret_key = '123'
+
 data_list_sync = []
 data_list_async = []
 
@@ -63,18 +66,31 @@ def req_func():
         return f'No! status: {res.status_code}'
 
 
+def save_users_to_session(users):
+    users_list_to_save = []
+    for user in users:
+        user_dict = {}
+        user_dict['sprites'] = {}
+        user_dict['sprites']['front_default'] = user['sprites']['front_default']
+        user_dict['name'] = user['name']
+        user_dict['height'] = user['height']
+        user_dict['weight'] = user['weight']
+        users_list_to_save.append(user_dict)
+    session['users'] = users_list_to_save
+
+
 async def fetch_url(client_session, url):
     """Fetch the specified URL using the aiohttp session specified."""
     # response = await session.get(url)
-    async with client_session.get(url) as resp:
+    async with client_session.get(url, ssl=False) as resp:
         response = await resp.json()
         return response
 
 
 async def get_all_urls(from_val, until_val):
-    async with aiohttp.ClientSession() as client_session:
+    async with aiohttp.ClientSession(trust_env=True) as client_session:
         tasks = []
-        for i in range(from_val, until_val + 1):
+        for i in range(from_val, until_val):
             url = f'https://pokeapi.co/api/v2/pokemon/{i}'
             task = asyncio.create_task(fetch_url(client_session, url))
             tasks.append(task)
@@ -84,7 +100,7 @@ async def get_all_urls(from_val, until_val):
 
 def get_users_sync(from_val, until_val):
     users = []
-    for i in range(from_val, until_val + 1):
+    for i in range(from_val, until_val):
         res = requests.get(f'https://pokeapi.co/api/v2/pokemon/{i}')
         print(res)
         users.append(res.json())
@@ -106,18 +122,28 @@ def users_func():
         # ASYNC
         if request.args['type'] == 'async':
             users = asyncio.run(get_all_urls(from_val, until_val))
+            print('run')
+
+            # asyncio.set_event_loop(asyncio.new_event_loop())
+            # loop = asyncio.get_event_loop()
+            # users = loop.run_until_complete(get_all_urls(from_val, until_val))
+            # print('event loop')
 
         end_time = time.time()
         time_to_finish = f'{end_time - start_time: .2f} seconds'
         session[f'{request.args["type"]}_time'] = time_to_finish
         session[f'{request.args["type"]}_num'] = session['num']
+        save_users_to_session(users)
         return render_template('users.html',
                                users=users,
                                time=time_to_finish,
                                from_val=from_val, until_val=until_val,
                                type_req=request.args['type'])
     else:
+        pass
+        users = session['users']
         session.clear()
+        session['users'] = users
         return render_template('users.html')
 
 
@@ -129,5 +155,10 @@ def rand_users_func():
     return redirect(url_for('users_func', **params))
 
 
+@app.route('/fetch')
+def fetch_func():
+    return render_template('fetch_example.html')
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

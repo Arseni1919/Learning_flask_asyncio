@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Users{% endblock %}
 {% block body %}
-    <h1>Pockemons</h1>
+    <h1>Backend Example</h1>
     {% if time %}
         {% if session.sync_time %}
             <h2>[SYNC] Time to finish: {{ session.sync_time }} to get: {{ session.sync_num }} items</h2>
@@ -11,13 +11,13 @@
         {% endif %}
     {% endif %}
     <h3>Sync:</h3>
-    <form action="/users" method="get">
-        From: <input type="text" name="from" value={{ from_val | default(1, true) }}>
-        Until: <input type="text" name="until" value={{ until_val | default(4, true) }}>
-        <input type="hidden" name="type" value="sync">
-        <input type="submit" value="Submit">
-    </form>
-    <br>
+{#    <form action="/users" method="get">#}
+{#        From: <input type="text" name="from" value={{ from_val | default(0, true) }}>#}
+{#        Until: <input type="text" name="until" value={{ until_val | default(0, true) }}>#}
+{#        <input type="hidden" name="type" value="sync">#}
+{#        <input type="submit" value="Submit">#}
+{#    </form>#}
+{#    <br>#}
     <form action="/rand_users" method="get">
         Num: <input type="text" name="num" value={{ session.num | default(3, true) }}>
         <input type="hidden" name="type" value="sync">
@@ -25,21 +25,21 @@
     </form>
 
     <h3>Async:</h3>
-    <form action="/users" method="get">
-        From: <input type="text" name="from" value={{ from_val | default(1, true) }}>
-        Until: <input type="text" name="until" value={{ until_val | default(4, true) }}>
-        <input type="hidden" name="type" value="async">
-        <input type="submit" value="Submit">
-    </form>
-    <br>
+{#    <form action="/users" method="get">#}
+{#        From: <input type="text" name="from" value={{ from_val | default(0, true) }}>#}
+{#        Until: <input type="text" name="until" value={{ until_val | default(0, true) }}>#}
+{#        <input type="hidden" name="type" value="async">#}
+{#        <input type="submit" value="Submit">#}
+{#    </form>#}
+{#    <br>#}
     <form action="/rand_users" method="get">
         Num: <input type="text" name="num" value={{ session.num | default(3, true) }}>
         <input type="hidden" name="type" value="async">
         <input type="submit" value="Get Random Pockemons">
     </form>
 
-    {% if users %}
-        {% for user in users %}
+    {% if session.users %}
+        {% for user in session.users %}
 {#            <h4>Json keys:</h4>#}
 {#            {% for k in user %}#}
 {#                {{ k }},#}

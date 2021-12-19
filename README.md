@@ -16,4 +16,8 @@ Best for fetching several http requests in parallel.
 - [Flask | Using `async` and `await`](https://flask.palletsprojects.com/en/2.0.x/async-await/#other-event-loops)
 - [stackoverflow | pip install flask[async]](https://stackoverflow.com/questions/30539798/zsh-no-matches-found-requestssecurity)
 - [blog | Async in Flask 2.0](https://testdriven.io/blog/flask-async/)
-- 
+- [blog | geekyhumans](https://geekyhumans.com/de/create-asynchronous-api-in-python-and-flask/)
+
+### Bugs:
+
+-[sof | ssl=False](https://stackoverflow.com/questions/63347818/aiohttp-client-exceptions-clientconnectorerror-cannot-connect-to-host-stackover)
