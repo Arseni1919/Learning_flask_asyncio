@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 import requests
 import asyncio
 import aiohttp
 import random
 import time
+
+import matplotlib.pyplot as plt
+import numpy as np
+from io import BytesIO
 # import ssl
 # from flask_session import Session
 # ssl._create_default_https_context = ssl._create_unverified_context
@@ -158,6 +162,28 @@ def rand_users_func():
 @app.route('/fetch')
 def fetch_func():
     return render_template('fetch_example.html')
+
+@app.route('/graphs')
+def graphs_func():
+    range_num = 10
+    if 'range_num' in request.args:
+        range_num = int(request.args['range_num'])
+    return render_template('graphs.html', range_num=range_num)
+
+
+@app.route('/get_image')
+def get_image_func():
+    num = int(request.args['num'])
+    plt.clf()
+    y = np.sin(np.array(range(num)))
+    y *= 10 * np.random.rand()
+    # print(y)
+    plt.plot(y)
+    img = BytesIO()
+    plt.savefig(img)
+    img.seek(0)
+    return send_file(img, mimetype='image/png', cache_timeout=0,)
+
 
 
 if __name__ == '__main__':
