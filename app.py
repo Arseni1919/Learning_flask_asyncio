@@ -145,9 +145,9 @@ def users_func():
                                type_req=request.args['type'])
     else:
         pass
-        users = session['users']
+        # users = session['users']
         session.clear()
-        session['users'] = users
+        # session['users'] = users
         return render_template('users.html')
 
 
@@ -162,6 +162,7 @@ def rand_users_func():
 @app.route('/fetch')
 def fetch_func():
     return render_template('fetch_example.html')
+
 
 @app.route('/graphs')
 def graphs_func():
