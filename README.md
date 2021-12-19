@@ -20,4 +20,4 @@ Best for fetching several http requests in parallel.
 
 ### Bugs:
 
--[sof | ssl=False](https://stackoverflow.com/questions/63347818/aiohttp-client-exceptions-clientconnectorerror-cannot-connect-to-host-stackover)
+- [sof | ssl=False](https://stackoverflow.com/questions/63347818/aiohttp-client-exceptions-clientconnectorerror-cannot-connect-to-host-stackover)
