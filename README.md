@@ -151,6 +151,12 @@ In html file:
 - [blog | Async in Flask 2.0](https://testdriven.io/blog/flask-async/)
 - [blog | geekyhumans](https://geekyhumans.com/de/create-asynchronous-api-in-python-and-flask/)
 
+### Graphs:
+- [jetbrains | Creating Web Applications with Flask](https://www.jetbrains.com/help/pycharm/creating-web-application-with-flask.html#line_charts)
+- [sof | BytesIO](https://stackoverflow.com/questions/42800250/difference-between-open-and-io-bytesio-in-binary-streams)
+- [flask | flask.send_file](https://flask.palletsprojects.com/en/2.0.x/api/#flask.send_file)
+- [mozilla | mime types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types)
+
 ### Bugs:
 
 - [sof | ssl=False](https://stackoverflow.com/questions/63347818/aiohttp-client-exceptions-clientconnectorerror-cannot-connect-to-host-stackover)
